@@ -1,0 +1,331 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Datatables-Highcharts-Leaflet example</title>
+<style>
+		    .leaflet {height:30rem;}
+		</style>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous" type="10e60e42a5deefae996034ed-text/javascript"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous" type="10e60e42a5deefae996034ed-text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous" type="10e60e42a5deefae996034ed-text/javascript"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.16/b-1.5.1/sc-1.4.3/sl-1.2.4/datatables.min.css" />
+<script type="10e60e42a5deefae996034ed-text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.16/b-1.5.1/sc-1.4.3/sl-1.2.4/datatables.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/plug-ins/preview/searchPane/dataTables.searchPane.min.css" />
+<script type="10e60e42a5deefae996034ed-text/javascript" src="https://cdn.datatables.net/plug-ins/preview/searchPane/dataTables.searchPane.min.js"></script>
+
+<script type="10e60e42a5deefae996034ed-text/javascript" src="https://code.highcharts.com/highcharts.js"></script>
+<script type="10e60e42a5deefae996034ed-text/javascript" src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="" type="10e60e42a5deefae996034ed-text/javascript"></script>
+
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js' type="10e60e42a5deefae996034ed-text/javascript"></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+<link rel="stylesheet" href="wiki/extensions/Leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.css" />
+<script src="wiki/extensions/Leaflet/plugins/awesome-markers/dist/leaflet.awesome-markers.js" type="10e60e42a5deefae996034ed-text/javascript"></script>
+</head>
+<body>
+<div class="container-fluid">
+<div class="row">
+<div class="col animated fadeInLeft">
+<div class="card">
+<div class="card-header">
+<h4>Procurement Graphs</h4>
+</div>
+<div id="chart" style="height:30rem"></div>
+</div>
+</div>
+<div class="col animated fadeInRight">
+<div class="card">
+<div class="card-header">
+<h4>Procurement Performance</h4>
+</div>
+<div></div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col">
+<div class="card">
+<div class="card-header">
+<h4>DataTables</h4>
+</div>
+<table class="table table-striped table-hover table-sm" id="dt-table">
+<thead class="thead-dark">
+<tr>
+<th>PO Number</th>
+<th>Equipment</th>
+<th>Approved Budget</th>
+<th>Types of Procurement</th>
+<th>Start Date</th>
+<th>End Date</th>
+<th>Total Lead Time</th>
+<th>Total Number of Signatures</th>
+<th>Comments</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+          {% for x in procurement_list %}
+          {% if x.Status == "Completed" %}
+          <tr>
+               <td>{{ x.PONo}}</td>
+              <td>{{ x.Equipment }}</td>
+              <td>PHP. {{ x.Budget }}</td>
+              <td>{{ x.Types_of_Procurement }}</td>
+              <td>{{ x.PPMP_Date}}</td>
+              <td>{{x.Check_Releasing_Date }}</td>
+              <td>{{x.Total_LeadTime}}</td>
+              <td>{{ x.Total_Signatures}}</td>
+              <td>{{ x.Comments}}</td>
+              <td>{{ x.Status}}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<script type="10e60e42a5deefae996034ed-text/javascript">
+			let draw = false;
+
+			const tooltipThreshold = 10;
+			const tooltipDetailsThreshold = 12;
+			
+		    // Create map, markers array, and markers layer
+            var mymap = new L.Map('map', {
+                fullscreenControl: true
+            });
+            var markersLayer = new L.LayerGroup();
+            // Add markers layer
+            markersLayer.addTo(mymap);
+
+			$(document).ready(function() {
+                // create DataTable
+                var table = $("#dt-table").DataTable(
+                    {
+                        "ajax": "datatables.json",
+                        "columnDefs": [
+                            {
+                                "targets": [ 10, 11 ],
+                                "visible": false,
+                                "searchable": false
+                            }
+                        ],
+                        "order": [ 8, "desc" ],
+                        "searchPane": {
+                            "threshold": 1
+                        }
+                    }
+                )
+                .on("page", () => {
+			    draw = true;
+			  })
+			  .on("draw", () => {
+			    if (draw) {
+                    draw = false;
+			    } else {
+                    createHighcharts(getChartData(table));
+                    updateMap(table);
+			    }
+			  });
+                
+                // create Highcharts
+                createHighcharts(getChartData(table));
+                
+                // create Leaflet
+                createMap();
+
+                // Set table events
+                setTableEvents(table);
+			});
+			
+			function getChartData(table) {
+			  const dataArray = [], EquipmenttArray = [], BudgetArray = [], TotalLeaddArray = [];
+			
+                // loop table rows
+                table.rows({ search: "applied" }).every(function() {
+                    var data = this.data();
+                    EquipmentArray.push(data[1]);
+                    BudgetArray.push(parseFloat(data[2]));
+                    TotalLeaddArray.push(parseFloat(data[7]));
+                });
+			
+			  // store all data in dataArray
+			  dataArray.push(teamArray, scoredArray, allowedArray);
+
+			  return dataArray;
+			}
+			
+			function createHighcharts(data) {
+			
+			  Highcharts.chart("chart", {
+			    title: {
+			      text: "Scored versus Allowed"
+			    },
+			    subtitle: {
+			      text: "Data from GHSFHA.org"
+			    },
+			    xAxis: [
+			      {
+			        categories: data[0],
+			        labels: {
+			          rotation: -45
+			        }
+			      }
+			    ],
+			    yAxis: [
+			      {
+			        // first yaxis
+			        title: {
+			          text: "Scored"
+			        }
+			      },
+			      {
+			        // secondary yaxis
+			        title: {
+			          text: "Allowed"
+			        },
+			        opposite: true
+			      }
+			    ],
+			    series: [
+			      {
+			        name: "Scored",
+			        color: "#0071A7",
+			        type: "spline",
+			        data: data[1]
+			      },
+			      {
+			        name: "Allowed",
+			        color: "#FF404E",
+			        type: "spline",
+			        data: data[2]
+			      }
+			    ],
+			    tooltip: {
+			      shared: true
+			    },
+			    legend: {
+			      backgroundColor: "#ececec",
+			      shadow: true
+			    },
+			    credits: {
+			      enabled: false
+			    },
+			    noData: {
+			      style: {
+			        fontSize: "16px"
+			      }
+			    }
+			  });
+			}
+			
+			function createMap() {
+	            var style = 'osm-intl';
+	            var server = 'https://maps.wikimedia.org/';
+	            
+	            // Set view
+	            mymap.setView([32.1656, -82.9001], 6);
+	            
+	            // Add a map layer
+	            L.tileLayer(server + style + '/{z}/{x}/{y}.png', {
+	                maxZoom: 18,
+	                id: 'wikipedia-map-01',
+	                attribution: 'Wikimedia maps beta | Map data &copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+	            }).addTo(mymap);
+	       }
+
+			function updateMap(table) {
+			    
+                markersLayer.clearLayers();
+
+                var markerIcon = L.AwesomeMarkers.icon({
+                    icon: 'circle',
+                    markerColor: 'darkblue',
+                    prefix: 'fa'
+                });
+
+                table.rows({ search: "applied" }).every(function() {
+    			    var data = this.data();
+
+                    var lat = parseFloat(data[10]);
+                    var lng = parseFloat(data[11]);
+                    var popupText = '<div class="modal-content" style="width:18rem;">'+
+                        '<div class="modal-header">'+
+                            '<h5 class="modal-title">'+data[0]+'</h5>'+
+                        '</div>'+
+                        '<div class="modal-body">'+
+                            '<p><a href="http://ghsfha.org">'+data[0]+'</a></p>'+
+                        '</div>'+
+                        '<div class="modal-footer">'+
+                            '<p>Modal footer text goes here.</p>'+
+                        '</div>'+
+                    '</div>';
+                    var tooltipText = '<strong>'+data[0]+'</strong><br/>';
+                    
+                    var markerLocation = new L.LatLng(lat, lng);
+                    var marker = new L.Marker(markerLocation, {icon: markerIcon} ).bindPopup(popupText);
+                    
+                    (mymap.getZoom() >= tooltipThreshold ? marker.bindTooltip(tooltipText, {direction: 'right', permanent:true}) : marker.bindTooltip(tooltipText, {direction: 'right', permanent:false} ));
+                    
+                    markersLayer.addLayer(marker);
+                    
+                });
+			}
+
+            function setTableEvents(table) {
+			  // listen for page clicks
+			  table.on("page", () => {
+			    draw = true;
+			  });
+			
+			  // listen for updates and adjust the chart accordingly
+			  table.on("draw", () => {
+			    if (draw) {
+                    draw = false;
+			    } else {
+                    createHighcharts(getChartData(table));
+                    updateMap(table);
+			    }
+			  });
+			}
+			
+			var lastZoom;
+            mymap.on('zoomend', function() {
+                var zoom = mymap.getZoom();
+                if (zoom < tooltipThreshold && (!lastZoom || lastZoom >= tooltipThreshold)) {
+                    mymap.eachLayer(function(l) {
+                        if (l.getTooltip()) {
+                            var tooltip = l.getTooltip();
+                            l.unbindTooltip().bindTooltip(tooltip, {permanent:false})
+                        }
+                    })
+                } else if (zoom >= tooltipThreshold && (!lastZoom || lastZoom < tooltipThreshold)) {
+                    mymap.eachLayer(function(l) {
+                        if (l.getTooltip()) {
+                            var tooltip = l.getTooltip();
+                            l.unbindTooltip().bindTooltip(tooltip, {permanent:true})
+                        }
+                    });
+                }
+                lastZoom = zoom;
+            })
+		</script>
+<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/7089c43e/cloudflare-static/rocket-loader.min.js" data-cf-settings="10e60e42a5deefae996034ed-|49" defer=""></script></body>
+</html>

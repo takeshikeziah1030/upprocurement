@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'procurement.css' %}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Detail View</title>
+  </head>
+  <body style="background-color:grey;">
+    <center>
+      {% load static %}
+      <img src="{% static "/images/logo.png" %}" alt="UP Logo" width=100 height=100>  
+      <font color="#F3C312" size=6><b>Process Flow Diagram of:</font>
+      <font color="#F3C312" size=5 align="center">{{obj.Equipment}} -  {{obj.PONo}} </b></font><br>
+      <a href="{% url 'accounts:list' %}" class="btn btn-secondary btn-mid" role="button"><font color="#F3C312">Projects List</font></a>
+      <a href="#" class="btn btn-secondary btn-sm" role="button">+</a>
+      <a href="{% url 'accounts:upload' %}" class="btn btn-secondary btn-mid" role="button"><font color="#F3C312">Upload Dataset</font></a>
+      <a href="#" class="btn btn-secondary btn-sm" role="button">+</a>
+      <a href="{% url 'accounts:list' %}" class="btn btn-secondary btn-mid" role="button"><font color="#F3C312">Create New Request</font></a>
+      <a href="#" class="btn btn-secondary btn-sm" role="button"> +</a>
+    </center>
+
+    <section class="timeline-area">
+      <!-- Step1 -->
+      <div>
+        <center>
+        <font color="#8A060A" size=5>
+        <b>Step1: Creation of Purchase Request with attached BidForm and PPMP. 
+        </b></font><br>
+        </center>
+        <p align="center">
+          <font size=3>
+            Equipment: <font color="#06068A"><b>{{obj.Equipment}}</b></font><br>
+            PO No. : <font color="#06068A"><b>{{obj.PONo}}</b></font><br>
+            Delivery Terms: <font color="#06068A"><b>{{obj.DeliveryTerms}}</b></font><br>
+            Budget: Php. <font color="#06068A"><b>{{obj.Budget}}</b></font><br>
+            Approved PPMP Date: <font color="#06068A"><b>{{obj.PPMP_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.PPMP_Signatures}}</b></font><br>
+            No. of Pages: <font color="#06068A"><b>{{obj.PPMP_Pages}}</b></font><br>
+            No. of days till next process: <font color="#06068A"><b>{{obj.PPMP_Days}}</b></font><br><br>
+            {% if obj.PPMP_Attachment %}
+              <a href="{{obj.PPMP_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+      <!-- Step2 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step2: Submission of Purchase Request to Procurement Office </b></font><br>
+          <font size=3>
+            Approved PR Date: <font color="#06068A"><b>{{obj.PR_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.PR_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.PR_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.PR_Days}}</b></font><br><br>
+            {% if obj.PR_Attachment %}
+              <a href="{{obj.PR_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+      <!-- Step3 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step3: Posting of Request to PhilGEPS </b></font><br>
+          <font size=3>
+            Approved Pre-Bid Form Date: <font color="#06068A"><b>{{obj.Pre_Bid_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.Pre_Bid_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.Pre_Bid_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.Pre_Bid_Days}}</b></font><br><br>
+            {% if obj.PR_Attachment %}
+              <a href="{{obj.PreBid_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+      <!-- Step4 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step4: Opening of Bids for succefull PhilGEPS Post </b></font><br>
+          <font size=3>
+            Opening Bid Date: <font color="#06068A"><b>{{obj.Opening_Bid_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.Opening_Bid_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.Opening_Bid_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.Opening_Bid_Days}}</b></font><br><br>
+            {% if obj.Opening_Attachment %}
+              <a href="{{obj.Opening_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+
+      <!-- Step5 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step5: Processing of Post Qualification Bid</b></font><br>
+          <font size=3>
+            Post Qualification Date: <font color="#06068A"><b>{{obj.Post_Qual_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.Post_Qual_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.Post_Qual_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.Post_Qual_Days}}</b></font><br><br>
+            {% if obj.PostQual_Attachment %}
+              <a href="{{obj.PostQual_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+
+      <!-- Step6 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step6: Realeased of Notice of Awards and Notice to Proceed</b></font><br>
+          <font size=3>
+            NOA Date: <font color="#06068A"><b>{{obj.NOA_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.NOA_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.NOA_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.NOA_Days}}</b></font><br><br>
+            {% if obj.NOA_Attachment %}
+              <a href="{{obj.NOA_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+
+      <!-- Step7 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step7: Released of Purchase Order</b></font><br>
+          <font size=3>
+            Purchase Order Date: <font color="#06068A"><b>{{obj.PO_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.PO_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.PO_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.PO_Days}}</b></font><br><br>
+            {% if obj.NOA_Attachment %}
+              <a href="{{obj.NOA_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+
+      <!-- Step8 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step8: Signing of Purchase Order</b></font><br>
+          <font size=3>
+            PO Approval Date: <font color="#06068A"><b>{{obj.PO_Approval_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.PO_Approval_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.PO_Approval_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.PO_Approval_Days}}</b></font><br><br>
+            {% if obj.NOA_Attachment %}
+              <a href="{{obj.NOA_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+
+      <!-- Step9 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step9: Approved Supplier/s Delivery Date</b></font><br>
+          <font size=3>
+            Delivery Date: <font color="#06068A"><b>{{obj.Delivery_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.Delivery_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.Delivery_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.Delivery_Days}}</b></font><br><br>
+            Inspected By: <font color="#06068A"><b>{{obj.Delivery_Inspected_By}}</b></font><br>
+            Inspected Date: <font color="#06068A"><b>{{obj.Delivery_Inspected_Date}}</b></font><br>
+            {% if obj.Delivery_Attachment %}
+              <a href="{{obj.Delivery_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+        <!-- Step10 -->
+         <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step10: Actual Item Delivery, Creation of Inspection and Acceptance Report</b></font><br>
+          <font size=3>
+            PO Supplier Date: <font color="#06068A"><b>{{obj.PO_Supplier_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.PO_Supplier_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.PO_Supplier_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.PO_Supplier_Days}}</b></font><br><br>
+            Inspected By: <font color="#06068A"><b>{{obj.Supplier_Modified_By}}</b></font><br>
+            Inspected Date: <font color="#06068A"><b>{{obj.Supplier_Modified_Date}}</b></font><br>
+            {% if obj.PO_Attachment %}
+              <a href="{{obj.PO_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+
+      <!-- Step11 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step11: Submission of PO copy to COA and Submission of DV to Acct. Office</b></font><br>
+          <font size=3>
+            DV Processing Date: <font color="#06068A"><b>{{obj.DV_Processing_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.DV_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.DV_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.DV_Days}}</b></font><br>
+            Modified By: <font color="#06068A"><b>{{obj.DV_Modified_By}}</b></font><br>
+            Modified Date: <font color="#06068A"><b>{{obj.DV_Modified_Date}}</b></font><br>
+            {% if obj.DVProcessing_Attachment %}
+              <a href="{{obj.DVProcessing_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+
+      <!-- Step12 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step12: Approval of Disbursement Voucher(DV) by the Accounting Office</b></font><br>
+          <font size=3>
+            DV Approval Date: <font color="#06068A"><b>{{obj.DV_Approval_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.DV_Approval_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.DV_Approval_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.DV_Approval_Days}}</b></font><br>
+            Approved By: <font color="#06068A"><b>{{obj.DV_Approved_By}}</b></font><br>
+            Approved Date: <font color="#06068A"><b>{{obj.DV_Approved_Date}}</b></font><br>
+            {% if obj.DVApproval_Attachment %}
+              <a href="{{obj.DVApproval_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+
+      <!-- Step13 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step13: Approved OR/CR Request</b></font><br>
+          <font size=3>
+            OR_CR_Request Date: <font color="#06068A"><b>{{obj.OR_CR_Request_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.OR_CR_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.OR_CR_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.OR_CR_Days}}</b></font><br>
+            {% if obj.ORCR_Attachment %}
+              <a href="{{obj.ORCR_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+
+      <!-- Step14 -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Step14: Releasing of Check</b></font><br>
+          <font size=3>
+            Check_Releasing Date: <font color="#06068A"><b>{{obj.Check_Releasing_Date}}</b></font><br>
+            No. of Signatures: <font color="#06068A"><b>{{obj.Check_Signatures}}</b></font><br>
+            No. of Pages : <font color="#06068A"><b>{{obj.Check_Pages}}</b></font><br>
+            No. of days till next process:  <font color="#06068A"><b>{{obj.Check_Days}}</b>></font><br>
+            {% if obj.Checks_Attachment %}
+              <a href="{{obj.Checks_Attachment.url}}" class="btn btn-primary btn-sm" >View Attachment</a><br>
+            {% endif %}
+          </font>
+        </p>
+      </div>
+
+      <!-- Summary -->
+      <div>
+        <p align="center">
+        <font color="#8A060A" size=5><b>Summary:</b></font><br>
+          <font size=3>
+            Total Lead Time - From PPMP to Delivery: <font color="#06068A"><b>{{obj.Total_LeadTime}}</b></font><br>
+            Total No. of Signatures: <font color="#06068A"><b>{{obj.Total_Signatures}}</b></font><br>
+            Comments and other Info : <br> 
+            {{obj.Comments}}<br><br>
+            <a href="#" class="btn btn-warning btn-sm" >View Transactional Analytics</a><br>
+          </font>
+        </p>
+      </div>
+    </section>
+  
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  </body>
+</html>
