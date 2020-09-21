@@ -1,0 +1,10 @@
+- Show Logs:
+- Person who created the last request / last modified.
+- Uploading dataset: Historical Transactions - created templates
+for RA(s)
+-Select only important columns for the Homepage Display.
+
+
+Add column for Status:
+On-going
+Completed
